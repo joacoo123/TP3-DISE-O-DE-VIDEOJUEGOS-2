@@ -11,7 +11,7 @@ public class Jugador : MonoBehaviour
     private Vector3 dato;
     private int score;
     private int scoreString;
-    private int limiteEscala;
+    private float limiteEscala;
     private float tiempoAcumulado;
     private int tiempoSegundos;
 
@@ -35,7 +35,8 @@ public class Jugador : MonoBehaviour
     {
         escala = new Vector3(escalaValor, escalaValor, 0f);
         OnTimeChanged.Invoke(tiempoTotal.ToString());
-        limiteEscala = 10;
+        limiteEscala = 0.07f;
+
     }
 
     // Update is called once per frame
@@ -65,14 +66,17 @@ public class Jugador : MonoBehaviour
         {
             transform.localScale += escala;
             score += sumaScore;
-            limiteEscala++;
+            
+            Debug.Log(limiteEscala);
         }
         else if (collision.gameObject.CompareTag("EnemigoResta"))
         {
-            if((limiteEscala >= 0))
+            if((transform.localScale.x>limiteEscala))
             {
+
                 transform.localScale -= escala * 2;
-                limiteEscala--;
+                
+                Debug.Log(limiteEscala);
             }
             
             score -= sumaScore*2;
